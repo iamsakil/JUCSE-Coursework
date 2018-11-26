@@ -1,0 +1,7 @@
+There is an error in this packet. The 4 left-most 
+bits (0100) show the version, which is correct. 
+The next 4 bits (0010) show the header length, 
+which means (2 × 4 byte words = 8 bytes), which 
+is wrong. The minimum number of bytes in the 
+header must be 20. The packet has been corrupted 
+in transmission.

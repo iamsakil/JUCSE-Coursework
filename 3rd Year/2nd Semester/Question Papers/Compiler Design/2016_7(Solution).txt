@@ -1,0 +1,32 @@
+5.2.3: Suppose that we have a production A -> BCD. Each of the four nonterminals A, B, C, and D have two attributes: s is a synthesized attribute, and i is an inherited
+       attribute. For each of the sets of rules below, tell whether (1) the rules are consistent with an S-attributed definition (2) the rules are consistent with an 
+       L-attributed definition, and (3) whether the rules are consistent with any evaluation order at all?
+
+a) A.s = B.i + C.s
+
+    No--contains inherited attribute
+    Yes--"From above or from the left"
+    Yes--L-attributed so no cycles
+
+b) A.s = B.i + C.s and D.i = A.i + B.s
+
+    No--contains inherited attributes
+    Yes--"From above or from the left"
+    Yes--L-attributed so no cycles
+
+c) A.s = B.s + D.s
+
+    Yes--all attributes synthesized
+    Yes--all attributes synthesized
+    Yes--S- and L-attributed, so no cycles
+
+d)
+
+    A.s = D.i
+    B.i = A.s + C.s
+    C.i = B.s
+    D.i = B.i + C.i
+
+    No--contains inherited attributes
+    No--B.i uses A.s, which depends on D.i, which depends on B.i (cycle)
+    No--Cycle implies no topological sorts (evaluation orders) using the rules

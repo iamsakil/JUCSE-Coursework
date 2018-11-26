@@ -1,0 +1,127 @@
+set SERVEROUTPUT ON;
+declare
+  name_of_emp emp.emp_name%type;
+  designation_code emp.desig_code%type;
+  ec emp.emp_code%type;
+begin
+  ec := '&ec';
+  select emp_name,desig_code into name_of_emp,designation_code from emp where emp_code = ec;
+  dbms_output.put_line(name_of_emp||designation_code);
+end;
+/
+set severoutput on;
+declare
+  number1 number(10);
+begin
+  number1 := '&number1';
+  if number1<10 then
+    dbms_output.put_line('Correct');
+  else
+    dbms_output.put_line('Wrong');
+  end if;
+end;
+/
+set serveroutput on;
+declare
+  number1 number(10);
+  number2 number(10):=10;
+begin
+  number1 := '&number1';
+  loop
+    if number2=0 then
+      exit;
+    end if;
+    dbms_output.put_line(number1 || ' * ' || number2 || ' = ' || number1*number2);
+    number2 := number2 -1;
+   end loop;
+end;
+/
+set serveroutput on;
+declare
+  number1 number(10);
+  number2 number(10):=10;
+begin
+  number1 := '&number1';
+  while number2>0
+    loop
+      --if number2=0 then
+        --exit;
+      --end if;
+      dbms_output.put_line(number1 || ' * ' || number2 || ' = ' || number1*number2);
+      number2 := number2 -1;
+     end loop;
+end;
+/
+set serveroutput on;
+declare
+  number1 number(10);
+  --number2 number(10):=10;
+begin
+  number1 := '&number1';
+  for I in reverse 1 .. 10
+    loop
+      --if number2=0 then
+        --exit;
+      --end if;
+      dbms_output.put_line(number1 || ' * ' || I || ' = ' || number1*I);
+     end loop;
+end;
+/
+create table student(
+name_of_stu varchar2(30),
+roll number(20)
+);
+
+
+set serveroutput on;
+create or replace trigger student_db
+before insert or delete or update on student
+for each row
+enable
+declare
+  v_name varchar2(30);
+begin
+  select user into v_name from dual;
+  if inserting then
+    dbms_output.put_line('insert is done by : ' || v_name);
+  elsif deleting then
+    dbms_output.put_line('delete is done by : ' || v_name);
+  elsif updating then
+    dbms_output.put_line('update is done by : ' || v_name);
+  end if;
+end;
+
+/
+insert into student values('Soumya Kanti Naskar',001410501044);
+update student set NAME_OF_STU='Riju Naskar' where NAME_OF_STU='Soumya Kanti Naskar';
+/
+set serveroutput on;
+declare
+  I  EMP.EMP_NAME%type;
+  cursor c1 is select emp_name from emp;
+begin
+  open c1;
+  loop
+    fetch c1 into I;
+    exit when c1%notfound;
+    dbms_output.put_line(I);
+  end loop;
+  close c1;
+end;
+/
+set serveroutput on;
+declare
+  dc emp.dept_code%type;
+  cursor c1 is select emp_name,city from emp where dept_code=dc;
+  I  c1%rowtype;
+begin
+  dc := '&dc';
+  open c1;
+  loop
+    fetch c1 into I;
+    exit when c1%notfound;
+    dbms_output.put_line(I.emp_name||I.city);
+  end loop;
+  close c1;
+end;
+/

@@ -1,0 +1,16 @@
+prog -> type main ( ) { dec_list stmt_list }
+dec_list -> type id_list ;
+type -> int | float | void
+id_list -> id | id_list , id
+stmt_list -> stmt | stmt_list stmt
+stmt -> assign | for_stmt | read_stmt | write_stmt | if_stmt
+assign -> id = exp ;
+exp -> term | exp + term | exp - term
+term -> factor | term * factor | term / factor
+factor -> id | integer | ( exp )
+read_stmt -> read ( id_list ) ;
+write_stmt -> print ( id_list ) ;
+if_stmt -> if ( cndtn ) stmt else stmt | if ( cndtn ) stmt
+for -> ( assign ; cndtn ; assign ) { stmt_list }
+cndtn -> exp relop exp
+relop -> < | > | <= | >= | ==

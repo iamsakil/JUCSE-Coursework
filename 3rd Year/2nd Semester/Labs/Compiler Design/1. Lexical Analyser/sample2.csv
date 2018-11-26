@@ -1,0 +1,43 @@
+Token No.,Token,Token Type,Row,Column
+1,int,Keyword,1,4
+2,main,Keyword,1,9
+3,(,Punctuation Symbol,1,10
+4,),Punctuation Symbol,1,11
+5,{,Punctuation Symbol,2,2
+6,int,Keyword,3,8
+7,n,Identifier,3,10
+8,=,Assignment Op,3,12
+9,5,Number,3,14
+10,",",Punctuation Symbol,3,15
+11,a,Identifier,3,16
+12,=,Assignment Op,3,18
+13,0,Number,3,20
+14,;,Punctuation Symbol,3,21
+15,for,Keyword,4,8
+16,(,Punctuation Symbol,4,9
+17,i,Identifier,4,10
+18,=,Assignment Op,4,11
+19,0,Number,4,12
+20,;,Punctuation Symbol,4,13
+21,i,Identifier,4,14
+22,<,Relational Op,4,15
+23,5,Number,4,16
+24,;,Punctuation Symbol,4,17
+25,i,Identifier,4,18
+26,=,Assignment Op,4,19
+27,i,Identifier,4,20
+28,+,Arithmetic Op,4,21
+29,1,Number,4,22
+30,),Punctuation Symbol,4,23
+31,{,Punctuation Symbol,5,6
+32,a,Identifier,6,10
+33,=,Assignment Op,6,12
+34,a,Identifier,6,14
+35,+,Arithmetic Op,6,16
+36,i,Identifier,6,18
+37,;,Punctuation Symbol,6,19
+38,},Punctuation Symbol,7,6
+39,return,Keyword,8,11
+40,0,Number,8,13
+41,;,Punctuation Symbol,8,14
+42,},Punctuation Symbol,9,2

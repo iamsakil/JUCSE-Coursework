@@ -1,0 +1,74 @@
+BUBBLE_SORT START 0000
+.
+.@Data Section
+N WORD 2
+ARR RESW 2
+
+TEMP RESW 1
+TEMP2 RESW 1
+IN_COMP RESW 1
+IN_ITR RESW 1
+INDEX RESW 1
+
+ZERO WORD 0
+ONE WORD 1
+THREE WORD 3
+.
+.@Code Section
+MAIN    LDA N
+        COMP ONE
+        JEQ EXIT
+        JLT EXIT
+SUB ONE
+STA IN_COMP
+
+OUTER LDA IN_COMP
+    STA IN_ITR
+    SUB ONE
+    STA IN_COMP
+
+    LDA ZERO
+    STA INDEX
+
+    INNER LDX INDEX
+        LDA ARR, X
+        STA TEMP
+        
+        LDA INDEX
+        ADD THREE
+        STA INDEX
+        
+        LDX INDEX
+        LDA ARR, X
+        
+        COMP TEMP
+        
+        JGT SKIP
+        JEQ SKIP
+        SWAP   STA TEMP2
+               LDA TEMP
+               STA ARR, X
+               
+               LDA INDEX
+               SUB THREE
+               STA INDEX
+               LDX INDEX
+
+               LDA TEMP2
+               STA ARR,X
+
+               LDA INDEX
+               ADD THREE
+               STA INDEX
+        SKIP   LDA IN_ITR
+               SUB ONE
+               STA IN_ITR
+        COMP ZERO
+        JGT INNER
+LDA IN_COMP
+COMP ZERO
+JGT OUTER
+
+EXIT LDA ZERO
+
+END MAIN

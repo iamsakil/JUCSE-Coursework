@@ -1,0 +1,30 @@
+Token No.,Token,Token Type,Row,Column
+1,void,Keyword,1,5
+2,main,Keyword,1,10
+3,(,Punctuation Symbol,1,11
+4,),Punctuation Symbol,1,12
+5,{,Punctuation Symbol,2,2
+6,int,Keyword,3,8
+7,a5,Identifier,3,11
+8,=,Assignment Op,3,12
+9,5,Number,3,13
+10,;,Punctuation Symbol,3,14
+11,if,Keyword,4,7
+12,(,Punctuation Symbol,4,8
+13,100,Number,4,11
+14,>,Relational Op,4,12
+15,99,Number,4,14
+16,),Punctuation Symbol,4,15
+17,{,Punctuation Symbol,4,16
+18,a,Identifier,5,10
+19,=,Assignment Op,5,12
+20,b,Identifier,5,14
+21,+,Arithmetic Op,5,16
+22,c,Identifier,5,18
+23,;,Punctuation Symbol,5,19
+24,100,Number,11,12
+25,},Punctuation Symbol,12,6
+26,return,Keyword,13,11
+27,0,Number,13,13
+28,;,Punctuation Symbol,13,14
+29,},Punctuation Symbol,14,2

@@ -1,0 +1,25 @@
+FACTORIAL START 1000
+.
+.@Data Section
+ANS RESW 1
+N WORD 5
+ONE WORD 1
+TWO WORD 2
+.
+.@Code Section
+MAIN    LDA ONE
+        STA ANS
+BASE    LDA N
+        COMP TWO
+        JLT EXIT
+LOOP    LDA ANS
+        MUL N
+        STA ANS
+
+        LDA N
+        SUB ONE
+        STA N
+        COMP ONE
+        JGT LOOP
+EXIT LDA ONE
+END MAIN

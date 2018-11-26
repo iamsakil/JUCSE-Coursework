@@ -1,0 +1,31 @@
+.1 dda
+.2 bres line
+.3 midpnt line
+.4 bres circle
+.4 bres circle 8-way
+.5 midpnt circle
+.6 midpnt circle 1.5
+.6 midpnt circle 2
+.7 midpnt ellipse
+
+.8 scan line conv
+9 scan line fill
+.10 edge fill
+.11 fence fill
+.12 edge flag
+
+.13 stack seed
+
+.14 scan line seed
+
+.15 sutherland cohen
+.16 midpnt clip
+.17 cyrus beck
+.18 liang barsky
+.19 sutherland hodgeman
+
+.20 2d transformations
+.21 3d transformations
+.22 linear approximation
+23 cubic spline
+.24 bezier curve

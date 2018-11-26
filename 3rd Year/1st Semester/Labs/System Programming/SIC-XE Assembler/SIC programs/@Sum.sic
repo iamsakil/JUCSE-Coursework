@@ -1,0 +1,26 @@
+SUM START 1234
+.Add first N numbers
+.@Data Section
+ZERO WORD 0
+N WORD 10
+ONE WORD 1
+ITERATOR RESW 1
+SUM RESW 1
+
+.@Code Section
+MAIN LDA ZERO .A = ZERO
+STA SUM .SUM = ZERO
+STA ITERATOR .ITERATOR = ZERO
+
+LOOP    LDA ITERATOR
+        ADD ONE
+        STA ITERATOR .ITERATOR += 1
+
+        LDA SUM
+        ADD ITERATOR
+        STA SUM .SUM += ITERATOR
+        
+        LDA ITERATOR
+        COMP N
+        JLT LOOP .Jump to LOOP if(ITERATOR < N)
+END MAIN

@@ -1,0 +1,4 @@
+www.facebook.com  93.170.52.20
+www.google.com 192.168.0.7
+www.yahoo.com 192.168.0.16
+www.github.com 66.102.13.191

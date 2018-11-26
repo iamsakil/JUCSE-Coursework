@@ -1,0 +1,6 @@
+my_sum(From, To, S) :-
+  From < To,
+  Next is From + 1,
+  my_sum(Next, To, T),
+  S is T * From.
+my_sum(N, N, N).

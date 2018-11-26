@@ -1,0 +1,121 @@
+program -> declaration_list 
+declaration_list -> declaration_list declaration  | declaration 
+declaration -> type ID temp3 
+type -> int  | void 
+params -> type ID 
+compound_stmt -> { local_declarations statement_list } 
+local_declarations -> local_declarations var_declaration  | eps 
+statement_list -> statement_list statement  | eps 
+statement -> expression_stmt  | compound_stmt  | selection_stmt  | return_stmt 
+expression_stmt -> expression ;  | ; 
+selection_stmt -> if ( expression ) statement temp1 
+return_stmt -> return ; 
+expression -> var = expression  | simple_expression 
+var -> ID 
+simple_expression -> EXP temp2 
+relop -> <  | > 
+EXP -> EXP addop TERM  | TERM 
+addop -> +  | - 
+TERM -> TERM mulop factor  | factor 
+mulop -> *  | / 
+factor -> ( expression )  | var  | NUM 
+temp3 -> ;  | ( params ) compound_stmt 
+After left recursion removal
+
+program -> declaration_list 
+declaration_list -> declaration declaration_list' 
+declaration -> type ID temp3 
+type -> int  | void 
+params -> int ID  | void ID 
+compound_stmt -> { local_declarations statement_list } 
+local_declarations -> local_declarations' 
+statement_list -> statement_list' 
+statement -> expression_stmt  | { local_declarations statement_list }  | selection_stmt  | return_stmt 
+expression_stmt -> expression ;  | ; 
+selection_stmt -> if ( expression ) statement temp1 
+return_stmt -> return ; 
+expression -> var = expression  | simple_expression 
+var -> ID 
+simple_expression -> EXP temp2 
+relop -> <  | > 
+EXP -> TERM EXP' 
+addop -> +  | - 
+TERM -> factor TERM' 
+mulop -> *  | / 
+factor -> ( expression )  | ID  | NUM 
+temp3 -> ;  | ( params ) compound_stmt 
+declaration_list' -> declaration declaration_list'  | eps 
+local_declarations' -> var_declaration local_declarations'  | eps 
+statement_list' -> statement statement_list'  | eps 
+EXP' -> addop TERM EXP'  | eps 
+TERM' -> mulop factor TERM'  | eps 
+Printing First
+
+
+program : int void 
+declaration_list : int void 
+declaration : int void 
+type : int void 
+params : int void 
+compound_stmt : { 
+local_declarations : eps int void 
+statement_list : ( ; ID NUM eps if return { 
+statement : ( ; ID NUM if return { 
+expression_stmt : ( ; ID NUM 
+selection_stmt : if 
+return_stmt : return 
+expression : ( ID NUM 
+var : ID 
+simple_expression : ( ID NUM 
+relop : < > 
+EXP : ( ID NUM 
+addop : + - 
+TERM : ( ID NUM 
+mulop : * / 
+factor : ( ID NUM 
+temp3 : ( ; 
+declaration_list' : eps int void 
+local_declarations' : eps int void 
+statement_list' : ( ; ID NUM eps if return { 
+EXP' : + - eps 
+TERM' : * / eps 
+Printing follow
+
+
+program : $ ( ; ID NUM if int return void { } 
+declaration_list : $ ( ; ID NUM if int return void { } 
+declaration : $ ( ; ID NUM if int return void { } 
+type : ID 
+params : ) 
+compound_stmt : $ ( ; ID NUM if int return void { } 
+local_declarations : ( ; ID NUM if return { } 
+statement_list : } 
+statement : ( ; ID NUM if return { } 
+expression_stmt : ( ; ID NUM if return { } 
+selection_stmt : ( ; ID NUM if return { } 
+return_stmt : ( ; ID NUM if return { } 
+expression : ) ; 
+var : = 
+simple_expression : ) ; 
+relop : 
+EXP : 
+addop : ( ID NUM 
+TERM : + - 
+mulop : ( ID NUM 
+factor : * + - / 
+temp3 : $ ( ; ID NUM if int return void { } 
+declaration_list' : $ ( ; ID NUM if int return void { } 
+local_declarations' : ( ; ID NUM if return { } 
+statement_list' : } 
+EXP' : 
+TERM' : + - 
+ERROR
+expression -> var = expression 
+--------------
+expression -> simple_expression ERROR
+declaration_list' -> declaration declaration_list' 
+--------------
+declaration_list' -> eps ERROR
+declaration_list' -> declaration declaration_list' 
+--------------
+declaration_list' -> eps 

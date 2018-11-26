@@ -1,0 +1,33 @@
+SEARCH START 1000
+.
+.@Data Section
+ANS WORD 0
+KEY WORD 5
+INDEX RESW 1
+N WORD 03
+M WORD 08 .M = 3N - 1
+ARR RESW 3
+
+ZERO WORD 0
+ONE WORD 1
+TWO WORD 2
+THREE WORD 3
+.
+.@Code Section
+MAIN    LDA ZERO
+        STA INDEX
+LOOP    LDX INDEX
+        LDA ARR, X
+        COMP KEY
+        JLT SKIP
+        JGT SKIP
+FOUND   LDA ONE
+        STA ANS
+        J EXIT
+SKIP    LDA INDEX
+        ADD THREE
+        STA INDEX
+        COMP M
+        JLT LOOP
+EXIT    LDA ZERO
+END MAIN

@@ -1,0 +1,37 @@
+PRIME START 1000
+.
+.@Data Section
+ANS RESW 1
+N WORD 7
+
+TEMP RESW 1
+
+ZERO WORD 0
+ONE WORD 1
+TWO WORD 2
+.
+.@Code Section
+MAIN    LDA TWO
+        STA TEMP
+        LDA ONE
+        STA ANS
+TEST_TWO LDA N
+        COMP TWO
+        JEQ EXIT
+LOOP    LDA N
+        DIV TEMP
+        MUL TEMP
+        COMP N
+        JEQ NOT_PRIME
+
+        LDA TEMP
+        ADD ONE
+        STA TEMP
+
+        COMP N
+        JLT LOOP
+        J EXIT
+NOT_PRIME LDA ZERO
+          STA ANS
+EXIT    LDA ZERO
+END     MAIN

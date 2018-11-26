@@ -1,0 +1,15 @@
+// Input for the parser on which the parse tree is to be generated
+
+void main ( ) 
+{ 
+	int a , b , k ; 
+	print ( a ) ; 
+
+	if ( b == 100 ) 
+		a = b * a ; 
+
+	for (k = 0 ; k <= 10 ; k = k + 1 ) 
+	{ 
+		print ( k ) ; 
+	} 
+} 

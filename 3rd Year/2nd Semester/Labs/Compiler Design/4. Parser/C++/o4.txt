@@ -1,0 +1,23 @@
+program -> declaration_list
+declaration_list -> declaration_list declaration  | declaration
+declaration -> var_declaration  | fun_declaration
+var_declaration -> type ID ;
+type -> int  | void
+fun_declaration -> type ID ( params ) compound_stmt
+params -> type ID
+compound_stmt -> { local_declarations statement_list }
+local_declarations -> local_declarations var_declaration  | eps
+statement_list -> statement_list statement  | eps
+statement -> expression_stmt  | compound_stmt  | selection_stmt  | return_stmt
+expression_stmt -> expression ;  | ;
+selection_stmt -> if ( expression ) statement  | if ( expression ) statement else statement
+return_stmt -> return ;
+expression -> var = expression  | simple_expression
+var -> ID
+simple_expression -> EXP relop EXP  | EXP
+relop -> <  | >
+EXP -> EXP addop TERM  | TERM
+addop -> +  | -
+TERM -> TERM mulop factor  | factor
+mulop -> *  | /
+factor -> ( expression )  | var  | NUM

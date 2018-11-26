@@ -1,0 +1,11 @@
+ODD_SUM START 1234
+.Add first N odd numbers
+.@Data Section
+SUM RESW 1
+N WORD 10
+.
+.@Code Section
+MAIN    LDA N
+        MUL N
+        STA ANS
+END MAIN

@@ -1,0 +1,53 @@
+program -> declaration_list 
+declaration_list -> declaration_list declaration  | declaration 
+declaration -> var_declaration  | fun_declaration 
+var_declaration -> type ID ; 
+type -> int  | void 
+fun_declaration -> type ID ( params ) compound_stmt 
+params -> type ID 
+compound_stmt -> { local_declarations statement_list } 
+local_declarations -> local_declarations var_declaration  | eps 
+statement_list -> statement_list statement  | eps 
+statement -> expression_stmt  | compound_stmt  | selection_stmt  | return_stmt 
+expression_stmt -> expression ;  | ; 
+selection_stmt -> if ( expression ) statement temp1  | if ( expression ) statement else statement 
+return_stmt -> return ; 
+expression -> var = expression  | simple_expression 
+var -> ID 
+simple_expression -> EXP temp2 relop EXP  | EXP 
+relop -> <  | > 
+EXP -> EXP addop TERM  | TERM 
+addop -> +  | - 
+TERM -> TERM mulop factor  | factor 
+mulop -> *  | / 
+factor -> ( expression )  | var  | NUM 
+After left recursion removal
+
+program -> declaration_list 
+declaration_list -> declaration declaration_list' 
+declaration -> var_declaration  | fun_declaration 
+var_declaration -> type ID ; 
+type -> int  | void 
+fun_declaration -> int ID ( params ) compound_stmt  | void ID ( params ) compound_stmt 
+params -> int ID  | void ID 
+compound_stmt -> { local_declarations statement_list } 
+local_declarations -> eps local_declarations' 
+statement_list -> eps statement_list' 
+statement -> expression_stmt  | { local_declarations statement_list }  | selection_stmt  | return_stmt 
+expression_stmt -> expression ;  | ; 
+selection_stmt -> if ( expression ) statement temp1  | if ( expression ) statement else statement 
+return_stmt -> return ; 
+expression -> var = expression  | simple_expression 
+var -> ID 
+simple_expression -> EXP temp2 relop EXP  | EXP 
+relop -> <  | > 
+EXP -> TERM EXP' 
+addop -> +  | - 
+TERM -> factor TERM' 
+mulop -> *  | / 
+factor -> ( expression )  | ID  | NUM 
+declaration_list' -> declaration declaration_list'  | eps 
+local_declarations' -> var_declaration local_declarations'  | eps 
+statement_list' -> statement statement_list'  | eps 
+EXP' -> addop TERM EXP'  | eps 
+TERM' -> mulop factor TERM'  | eps 

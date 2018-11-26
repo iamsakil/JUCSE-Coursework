@@ -1,0 +1,22 @@
+# horizontal, vertical, diagonal
+#l -20 20 -20 -20
+#l -10 5 10 5
+#l 10 7 -10 7
+#l 0 0 5 5
+#l -5 5 0 0
+#l -5 3 -1 -1
+# gentle slope left
+#l 2 5 9 7
+#l -20 -15 15 -5
+#l -7 0 0 2
+#l -10 5 0 8
+#l -23 13 -3 19
+# gentle slope right
+#l -20 15 15 5
+#l -7 0 0 -2
+#l -10 -5 0 -8
+#l -23 -13 -3 -19
+# steep slope
+#l -7 -7 -5 3
+# clip
+#l -10 40 -10 -24

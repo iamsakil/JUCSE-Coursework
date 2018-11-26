@@ -1,0 +1,10 @@
+{
+  "name": "tutorial-multi-chat-client",
+  "integrations": {},
+  "watchPatterns": [
+    "scss/**/*",
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ]
+}

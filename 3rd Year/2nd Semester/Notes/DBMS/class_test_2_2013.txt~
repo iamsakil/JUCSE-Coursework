@@ -1,0 +1,31 @@
+1)
+	a) 	Consider a relation R(A,B,C,D,E) with FDs i)b->C ii)C->a iii)CE->D. Normalize R upto 
+		2NF assuming all the attributes are atomic and single valued. Also, explain whether the 
+		decomposition is loss-less or not.
+	b)	What are the problems of having multi-valued attributes in a schema?
+	c)	In order to be in 3NF, a relation must be in 2NF -- Explain.
+	d)	Armstrong's axioms are sound -- Explain
+
+
+
+2)	a)	What is the advantage of unordered file over ordered one?
+	b)	Secondary index provides logical ordering of data -- Explain
+	c)	Explain the basic principle of multilevel indexing. Mention it's disadvantages.
+	d)	Two relations R1 and R2 are to be joined. What will be your strategy so that number 
+		of disk accesses is reduced for the following cases:
+			i)	both the relations are very small
+			ii)	both are very large
+		Also, specify the number of block access in both cases
+	
+	
+	
+3)	Consider the following relations: 
+		STUDENT(ROLL,NAME)		P. Key = ROLL
+		SUBJECT(SCODE, SNAME)		P. Key = SCODE
+		RESULT(ROLL, SCODE, SCORE)	P. Key = (ROLL, SCODE)
+		
+	Write down the SQL statements for the following:
+		a)	For all students, show name and total score. List must appear in descending 
+			order of total score
+		b)	Show the name of the subjects in which average score is less than 70
+		c)	Show the combinations of roll and scode with no corresponding record in RESULT.

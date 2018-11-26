@@ -1,0 +1,11 @@
+short
+int
+long 
+char
+float
+bool
+if
+else
+for
+while
+

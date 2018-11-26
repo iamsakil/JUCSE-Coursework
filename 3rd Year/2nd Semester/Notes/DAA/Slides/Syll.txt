@@ -1,0 +1,6 @@
+1,2 Analysis Design Comp
+3 Divide and Conquer
+4 Greedy
+5 Dynamic Programming
+6 Nim tree
+7 Old Question 

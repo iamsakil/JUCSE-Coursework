@@ -1,0 +1,12 @@
+prefix=/usr/local
+exec_prefix=/usr/local
+libdir=/usr/local/lib
+bindir=/usr/local/bin
+includedir=/usr/local/include
+
+Name: libgraph
+Description: TC graphics API on GNU/Linux
+Version: 1.0.2
+Requires: 
+Libs: -L/usr/local/lib -lgraph
+Cflags: -I/usr/local/include

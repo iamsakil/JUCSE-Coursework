@@ -1,0 +1,245 @@
+program -> declaration_list 
+declaration_list -> declaration_list declaration  | declaration 
+declaration -> var_declaration  | fun_declaration 
+var_declaration -> type ID ; 
+type -> int  | void 
+fun_declaration -> type ID ( params ) compound_stmt 
+params -> type ID 
+compound_stmt -> { local_declarations statement_list } 
+local_declarations -> local_declarations var_declaration  | eps 
+statement_list -> statement_list statement  | eps 
+statement -> expression_stmt  | compound_stmt  | selection_stmt  | return_stmt 
+expression_stmt -> expression ;  | ; 
+selection_stmt -> if ( expression ) statement  | if ( expression ) statement else statement 
+return_stmt -> return ; 
+expression -> var = expression  | simple_expression 
+var -> ID 
+simple_expression -> EXP relop EXP  | EXP 
+relop -> <  | > 
+EXP -> EXP addop TERM  | TERM 
+addop -> +  | - 
+TERM -> TERM mulop factor  | factor 
+mulop -> *  | / 
+factor -> ( expression )  | var  | NUM 
+
+
+
+Printing productions after removing left recursion
+
+program -> declaration_list 
+declaration_list -> declaration declaration_list' 
+declaration -> var_declaration  | fun_declaration 
+var_declaration -> type ID ; 
+type -> int  | void 
+fun_declaration -> int ID ( params ) compound_stmt  | void ID ( params ) compound_stmt 
+params -> int ID  | void ID 
+compound_stmt -> { local_declarations statement_list } 
+local_declarations -> local_declarations' 
+statement_list -> statement_list' 
+statement -> expression_stmt  | { local_declarations statement_list }  | selection_stmt  | return_stmt 
+expression_stmt -> expression ;  | ; 
+selection_stmt -> if ( expression ) statement  | if ( expression ) statement else statement 
+return_stmt -> return ; 
+expression -> var = expression  | simple_expression 
+var -> ID 
+simple_expression -> EXP relop EXP  | EXP 
+relop -> <  | > 
+EXP -> TERM EXP' 
+addop -> +  | - 
+TERM -> factor TERM' 
+mulop -> *  | / 
+factor -> ( expression )  | ID  | NUM 
+declaration_list' -> declaration declaration_list'  | eps 
+local_declarations' -> var_declaration local_declarations'  | eps 
+statement_list' -> statement statement_list'  | eps 
+EXP' -> addop TERM EXP'  | eps 
+TERM' -> mulop factor TERM'  | eps 
+
+Printing FIRST
+
+program : int void 
+declaration_list : int void 
+declaration : int void 
+var_declaration : int void 
+type : int void 
+fun_declaration : int void 
+params : int void 
+compound_stmt : { 
+local_declarations : eps int void 
+statement_list : ( ; ID NUM eps if return { 
+statement : ( ; ID NUM if return { 
+expression_stmt : ( ; ID NUM 
+selection_stmt : if 
+return_stmt : return 
+expression : ( ID NUM 
+var : ID 
+simple_expression : ( ID NUM 
+relop : < > 
+EXP : ( ID NUM 
+addop : + - 
+TERM : ( ID NUM 
+mulop : * / 
+factor : ( ID NUM 
+declaration_list' : eps int void 
+local_declarations' : eps int void 
+statement_list' : ( ; ID NUM eps if return { 
+EXP' : + - eps 
+TERM' : * / eps 
+
+Printing FOLLOW
+
+program : $ 
+declaration_list : $ 
+declaration : $ int void 
+var_declaration : $ ( ; ID NUM if int return void { } 
+type : ID 
+fun_declaration : $ int void 
+params : ) 
+compound_stmt : $ int void 
+local_declarations : ( ; ID NUM if return { } 
+statement_list : } 
+statement : ( ; ID NUM else if return { } 
+expression_stmt : ( ; ID NUM else if return { } 
+selection_stmt : ( ; ID NUM else if return { } 
+return_stmt : ( ; ID NUM else if return { } 
+expression : ) ; 
+var : = 
+simple_expression : ) ; 
+relop : ( ID NUM 
+EXP : ) ; < > 
+addop : ( ID NUM 
+TERM : ) + - ; < > 
+mulop : ( ID NUM 
+factor : ) * + - / ; < > 
+declaration_list' : $ 
+local_declarations' : ( ; ID NUM if return { } 
+statement_list' : } 
+EXP' : ) ; < > 
+TERM' : ) + - ; < > 
+ERROR
+declaration -> var_declaration 
+--------------
+declaration -> fun_declaration ERROR
+declaration -> var_declaration 
+--------------
+declaration -> fun_declaration ERROR
+selection_stmt -> if ( expression ) statement 
+--------------
+selection_stmt -> if ( expression ) statement else statement ERROR
+expression -> var = expression 
+--------------
+expression -> simple_expression ERROR
+simple_expression -> EXP relop EXP 
+--------------
+simple_expression -> EXP ERROR
+simple_expression -> EXP relop EXP 
+--------------
+simple_expression -> EXP ERROR
+simple_expression -> EXP relop EXP 
+--------------
+simple_expression -> EXP 
+Printing TABLE
+
+program,int	program -> declaration_list 
+program,void	program -> declaration_list 
+declaration_list,int	declaration_list -> declaration declaration_list' 
+declaration_list,void	declaration_list -> declaration declaration_list' 
+declaration,int	declaration -> fun_declaration 
+declaration,void	declaration -> fun_declaration 
+var_declaration,int	var_declaration -> type ID ; 
+var_declaration,void	var_declaration -> type ID ; 
+type,int	type -> int 
+type,void	type -> void 
+fun_declaration,int	fun_declaration -> int ID ( params ) compound_stmt 
+fun_declaration,void	fun_declaration -> void ID ( params ) compound_stmt 
+params,int	params -> int ID 
+params,void	params -> void ID 
+compound_stmt,{	compound_stmt -> { local_declarations statement_list } 
+local_declarations,(	local_declarations -> local_declarations' 
+local_declarations,;	local_declarations -> local_declarations' 
+local_declarations,ID	local_declarations -> local_declarations' 
+local_declarations,NUM	local_declarations -> local_declarations' 
+local_declarations,if	local_declarations -> local_declarations' 
+local_declarations,int	local_declarations -> local_declarations' 
+local_declarations,return	local_declarations -> local_declarations' 
+local_declarations,void	local_declarations -> local_declarations' 
+local_declarations,{	local_declarations -> local_declarations' 
+local_declarations,}	local_declarations -> local_declarations' 
+statement_list,(	statement_list -> statement_list' 
+statement_list,;	statement_list -> statement_list' 
+statement_list,ID	statement_list -> statement_list' 
+statement_list,NUM	statement_list -> statement_list' 
+statement_list,if	statement_list -> statement_list' 
+statement_list,return	statement_list -> statement_list' 
+statement_list,{	statement_list -> statement_list' 
+statement_list,}	statement_list -> statement_list' 
+statement,(	statement -> expression_stmt 
+statement,;	statement -> expression_stmt 
+statement,ID	statement -> expression_stmt 
+statement,NUM	statement -> expression_stmt 
+statement,if	statement -> selection_stmt 
+statement,return	statement -> return_stmt 
+statement,{	statement -> { local_declarations statement_list } 
+expression_stmt,(	expression_stmt -> expression ; 
+expression_stmt,;	expression_stmt -> ; 
+expression_stmt,ID	expression_stmt -> expression ; 
+expression_stmt,NUM	expression_stmt -> expression ; 
+selection_stmt,if	selection_stmt -> if ( expression ) statement else statement 
+return_stmt,return	return_stmt -> return ; 
+expression,(	expression -> simple_expression 
+expression,ID	expression -> simple_expression 
+expression,NUM	expression -> simple_expression 
+var,ID	var -> ID 
+simple_expression,(	simple_expression -> EXP 
+simple_expression,ID	simple_expression -> EXP 
+simple_expression,NUM	simple_expression -> EXP 
+relop,<	relop -> < 
+relop,>	relop -> > 
+EXP,(	EXP -> TERM EXP' 
+EXP,ID	EXP -> TERM EXP' 
+EXP,NUM	EXP -> TERM EXP' 
+addop,+	addop -> + 
+addop,-	addop -> - 
+TERM,(	TERM -> factor TERM' 
+TERM,ID	TERM -> factor TERM' 
+TERM,NUM	TERM -> factor TERM' 
+mulop,*	mulop -> * 
+mulop,/	mulop -> / 
+factor,(	factor -> ( expression ) 
+factor,ID	factor -> ID 
+factor,NUM	factor -> NUM 
+declaration_list',int	declaration_list' -> declaration declaration_list' 
+declaration_list',void	declaration_list' -> declaration declaration_list' 
+declaration_list',$	declaration_list' -> eps 
+local_declarations',(	local_declarations' -> eps 
+local_declarations',;	local_declarations' -> eps 
+local_declarations',ID	local_declarations' -> eps 
+local_declarations',NUM	local_declarations' -> eps 
+local_declarations',if	local_declarations' -> eps 
+local_declarations',int	local_declarations' -> var_declaration local_declarations' 
+local_declarations',return	local_declarations' -> eps 
+local_declarations',void	local_declarations' -> var_declaration local_declarations' 
+local_declarations',{	local_declarations' -> eps 
+local_declarations',}	local_declarations' -> eps 
+statement_list',(	statement_list' -> statement statement_list' 
+statement_list',;	statement_list' -> statement statement_list' 
+statement_list',ID	statement_list' -> statement statement_list' 
+statement_list',NUM	statement_list' -> statement statement_list' 
+statement_list',if	statement_list' -> statement statement_list' 
+statement_list',return	statement_list' -> statement statement_list' 
+statement_list',{	statement_list' -> statement statement_list' 
+statement_list',}	statement_list' -> eps 
+EXP',)	EXP' -> eps 
+EXP',+	EXP' -> addop TERM EXP' 
+EXP',-	EXP' -> addop TERM EXP' 
+EXP',;	EXP' -> eps 
+EXP',<	EXP' -> eps 
+EXP',>	EXP' -> eps 
+TERM',)	TERM' -> eps 
+TERM',*	TERM' -> mulop factor TERM' 
+TERM',+	TERM' -> eps 
+TERM',-	TERM' -> eps 
+TERM',/	TERM' -> mulop factor TERM' 
+TERM',;	TERM' -> eps 
+TERM',<	TERM' -> eps 
+TERM',>	TERM' -> eps 

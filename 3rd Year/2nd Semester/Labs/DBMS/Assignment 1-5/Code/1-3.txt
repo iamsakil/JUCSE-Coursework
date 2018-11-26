@@ -1,0 +1,273 @@
+ASS1
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+create table emp01(emp01_code char(5) primary key, emp01_name char(20), dept_code char(5), desig_code char(5), sex char(1), address char(25), city char(20), state char(20), pin char(6), basic decimal(7,2), jn_dt date);
+	
+create table designation01(desig_code char(5) primary key, desig_desc char(20));
+	
+create table department01(dept_code char(5) primary key, dept_name char(15));
+----------------------------------------------------------------------------------------------------------------------------
+
+describe emp01;
+describe designation01;
+describe department01;
+----------------------------------------------------------------------------------------------------------------------------
+insert into designation01 values
+	('DES01','Manager');
+insert into designation01 values
+	('DES02','Executive');
+insert into designation01 values
+	('DES03','Officer');
+insert into designation01 values
+	('DES04','Clerk');	
+insert into designation01 values 
+	('DES05','Helper');
+	
+----------------------------------------------------------------------------------------------------------------------------
+
+insert into department01 values
+	('DP001','Personnel');
+insert into department01 values
+	('DP002','Production');
+insert into department01 values
+	('DP003','Purchase');
+insert into department01 values
+	('DP004','Finance');	
+insert into department01 values
+	('DP005','Research');
+	
+----------------------------------------------------------------------------------------------------------------------------
+insert into emp01 values('EM021', 'Sujoy Kansabanik', 'DP001', 'DES01','M','1 Sarcasm Avenue','Gotham City','Metropolis','134711','12345.67','17-FEB-2014');
+
+
+insert into emp01 values('EM022', 'Mousumi Maji', 'DP001', 'DES02','F','1 Carlsberg Lane','Beerville','Inebriated','711123','12344.67','28-OCT-2014');
+	
+insert into emp01 values('EM018', 'Anurag Roy', 'DP002', 'DES01','M','Kasba','Kolkata','WB','700069','12345.69','11-NOV-2014');
+
+insert into emp01 values('EM005', 'Dibyayan Mondal', 'DP001', 'DES01','M','1 Lord Laid Lane','Kolkata','WB','700121','12346.67','05-JUNE-2014');
+	
+insert into emp01 values('EM036', 'Biswajit Pramanik', null, 'DES01','M','1 Linux Kernel','Red Hat','WB','110011',null,'23-AUGUST-2014');
+	
+insert into emp01 values('EM011', 'Goutam Kundu', null, 'DES01','M','1 Chap Road','Near RailRoad','WB','700011',null,'04-JUNE-2014');
+
+insert into emp01 values('EM009', 'Soumika Paul', 'DP005', 'DES03','F','1 Giggle Loop','Near LordLaid','WB','700009',0.0,'07-SEP-2014');
+
+-------------------------------------------------------------------------------------------------------------------------------
+	
+set linesize 500;
+select * from emp01 where dept_code is null;
+select * from emp01 where basic=0.0;
+select * from emp01 where basic is null;
+-------------------------------------------------------------------------------------------------------------------------------
+
+select avg(basic) from emp01;
+-------------------------------------------------------------------------------------------------------------------------------	
+	
+update emp01 set basic=0.0 where basic is null;
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select avg(basic) from emp01;
+
+-------------------------------------------------------------------------------------------------------------------------------	
+	
+delete from emp01 where dept_code is null;
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select emp01_name, basic*0.5+basic*0.4+basic net_pay from emp01;
+	
+-------------------------------------------------------------------------------------------------------------------------------	
+select upper(emp01_name), basic from emp01 order by dept_code asc;
+-------------------------------------------------------------------------------------------------------------------------------	
+select * from emp01 where jn_dt > '01-JAN-1990';	
+
+-------------------------------------------------------------------------------------------------------------------------------
+select * from emp01 where extract(month from jn_dt) = 01;
+
+-------------------------------------------------------------------------------------------------------------------------------	
+	
+select max(basic),min(basic) from emp01;	
+-------------------------------------------------------------------------------------------------------------------------------	
+		
+select count(*) from emp01 where sex='F';	
+-------------------------------------------------------------------------------------------------------------------------------	
+
+update emp01 set city=upper(city);
+
+-------------------------------------------------------------------------------------------------------------------------------	
+	
+
+select count(distinct city) from emp01;
+ 
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select * from emp01 order by dept_code asc, basic desc;
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+ASS2
+-------------------------------------------------------------------------------------------------------------------------------
+select dept_code, max(basic), min(basic), avg(basic) from emp01 group by dept_code order by dept_code;
+-------------------------------------------------------------------------------------------------------------------------------	
+select dept_code,count(*) as fem_count from emp01  where sex='F' group by dept_code;
+
+-------------------------------------------------------------------------------------------------------------------------------	
+select city, count(*) as emp01_count_in_city from emp01 group by city;
+
+-------------------------------------------------------------------------------------------------------------------------------	
+select desig_code, count(*) as count_desig from emp01 where jn_dt between '1-JAN-2014' and '27-OCT-2014' group by desig_code order by count(*);
+
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select sum(basic), dept_code from emp01 where sex='M' group by dept_code order by sum(basic) desc;
+
+-------------------------------------------------------------------------------------------------------------------------------	
+select emp01.emp01_name, designation01.desig_desc, emp01.basic from emp01,designation01 where emp01.desig_code=designation01.desig_code;
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select emp01.emp01_name, designation01.desig_desc, department01.dept_name, emp01.basic from emp01,designation01,department01 where emp01.desig_code=designation01.desig_code and emp01.dept_code=department01.dept_code;
+
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select department01.dept_name from emp01,department01 where (select count(*) from emp01 where emp01.dept_code=department01.dept_code)=0 group by department01.dept_name;
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select department01.dept_name from emp01,department01 where (select count(*) from emp01 where emp01.dept_code=department01.dept_code)>0 group by department01.dept_name;
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------	
+select department01.dept_name from emp01,department01 where (select count(*) from emp01 where emp01.dept_code=department01.dept_code)>=10 group by department01.dept_name;
+
+-------------------------------------------------------------------------------------------------------------------------------	
+select dept_code from emp01 where basic = (select max(basic) from emp01);
+select * from emp01 where basic = (select max(basic) from emp01);
+
+select dept_code from emp01 where basic>=all(select distinct basic from emp01);
+-------------------------------------------------------------------------------------------------------------------------------	
+
+
+select designation01.desig_desc from designation01  where designation01.desig_code=(select desig_code from emp01 where basic>=all(select distinct basic from emp01));
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select count(*),dept_code  from emp01 where desig_code=(select desig_code from designation01 where desig_desc='Manager') group by dept_code;
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select emp01.emp01_code, emp01.emp01_name, emp01.basic from emp01 where emp01.basic>=all(select distinct basic from emp01);
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select emp01.emp01_code, emp01.emp01_name, emp01.basic from emp01 where emp01.basic<=all(select distinct basic from emp01);
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select dept_name from department01 where dept_code in (select dept_code from emp01 where basic>=all(select distinct basic from emp01) );
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+--select dept_name from department01 where dept_code=(select dept_code from emp01 group by dept_code order by avg(basic) desc limit 1 );
+select dept_code, max(av_b) from (select dept_code, avg(basic) as av_b from emp01 group by dept_code order by avg(basic)) as inner_t;
+
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+--select dept_name from department01 where dept_code=(select dept_code from emp01 group by dept_code order by count(*) desc limit 1 );
+--select dept_code, max(c_b) from (select dept_code, count(*) as c_b from emp01 group by dept_code order by count(*)) as inner_t;
+
+select dept_name from department01 where dept_code in (select dept_code from emp01 group by dept_code having avg(basic)>=all(select avg(basic) from emp01 group by dept_code ) );
+
+
+select dept_name from department01 where dept_code in (select dept_code from emp01 group by dept_code having count(*)>=all(select distinct count(*) from emp01 group by dept_code ) );
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+insert into emp01 values
+	('EM121', 'Sukanta Mondal', 'DP001', 'DE007','M','1 Sarcasm Avenue','Gotham City','Metropolis','134711','12345.67','17-FEB-2014');
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+delete from emp01 where desig_code not in (select desig_code from designation01);
+
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select * from emp01 outer_emp where outer_emp.sex='F' and basic<all (select avg(inner_emp.basic) from emp01 inner_emp where inner_emp.dept_code=outer_emp.dept_code);
+-------------------------------------------------------------------------------------------------------------------------------	
+
+select emp01_name from emp01 where desig_code=(select desig_code from designation01 where desig_desc='Manager' ) and sex='F';
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------	
+ASS3
+-------------------------------------------------------------------------------------------------------------------------------
+--Setting employee names to upper case
+
+
+--updating previous tables with constraints
+--previously, emp was
+--create table emp
+--	(emp_code char(5) primary key, emp_name char(20), dept_code char(5), desig_code char(5), sex char(1), address char(25), city char(20), state char(20), pin char(6), basic decimal(7,2), jn_dt date);
+
+create table department_ass3(
+	dept_code char(10) primary key,
+	dept_name char(30));
+
+create table employee_ass3
+	(emp_code char(10) primary key,
+	dept_code char(10),
+	emp_name char(30) constraint upper_case_name check (emp_name=upper(emp_name)),
+	address char(50), 
+	dt_jn date default sysdate,
+	grade char(1) constraint grade_valid check (grade in ('A','B','C')), 
+	basic number(7,2) constraint sal_chk check (basic>= 5000 and basic<=9000),
+	constraint dept_fkey foreign key(dept_code) references department_ass3(dept_code)
+	);
+
+create table leave_ass3(
+	emp_code char(10),
+	type char(2) constraint valid_type check(type in('CL','EL','ML')), 
+	from_dt date, to_dt date,
+	foreign key(emp_code) references employee_ass3(emp_code),
+	primary key(emp_code, type)
+	);
+
+create table personnel_ass3(
+	emp_code primary key,
+	emp_name,
+	dept_name,
+	basic)
+as select emp_code, emp_name, dept_name, basic from employee_ass3,
+	department_ass3 where employee_ass3.dept_code=department_ass3.dept_code
+	and basic=7000 and department_ass3.dept_code='D3';
+
+insert into personnel_ass3
+	select emp_code, emp_name, dept_name, basic from employee_ass3,
+	department_ass3 where employee_ass3.dept_code=department_ass3.dept_code
+	and basic>=7000
+	and emp_code not in (select distinct emp_code from personnel_ass3);
+
+alter table personnel_ass3 add (net_pay number(9,2));
+update personnel_ass3 set net_pay=1.5*basic;
+alter table personnel_ass3 drop column net_pay;
+
+drop table personnel_ass3;
+drop table leave_ass3;
+drop table employee_ass3;
+drop table department_ass3;
+
+--creating leave table

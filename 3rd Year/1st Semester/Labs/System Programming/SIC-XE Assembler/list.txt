@@ -1,0 +1,28 @@
+Line	Loc   Block		Source Statement		Object Code
+----------------------------------------------------------------
+
+5	1000  0		FACTORIAL		START		1000
+10		 .
+15		 .@Data Section
+20	1000  0		ANS	RESW		1
+25	1003  0		N	WORD		5
+30	1006  0		ONE	WORD		1
+35	1009  0		TWO	WORD		2
+40		 .
+45		 .@Code Section
+50	100C  0		MAIN		LDA		ONE		032FF7
+55	100F  0				STA		ANS		0F2FEE
+60	1012  0		BASE		LDA		N		032FEE
+65	1015  0				COMP		TWO		2B2FF1
+70	1018  0				JLT		EXIT		3B2018
+75	101B  0		LOOP		LDA		ANS		032FE2
+80	101E  0				MUL		N		232FE2
+85	1021  0				STA		ANS		0F2FDC
+90		 
+95	1024  0				LDA		N		032FDC
+100	1027  0				SUB		ONE		1F2FDC
+105	102A  0				STA		N		0F2FD6
+110	102D  0				COMP		ONE		2B2FD6
+115	1030  0				JGT		LOOP		372FE8
+120	1033  0		EXIT		LDA		ONE		032FD0
+125						END		MAIN
