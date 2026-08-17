@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/LondonAppDev/tutorial-multi-chat-server#readme",
   "dependencies": {
-    "ws": "^1.1.1"
+    "ws": "^5.2.5"
   }
 }
